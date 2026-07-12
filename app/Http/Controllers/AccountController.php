@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAccountRequest;
 use App\Models\Account;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class AccountController extends Controller
      */
     public function index()
     {
-        //
+        return inertia('accounts/index', [
+            'accounts' => Account::all()
+        ]);
     }
 
     /**
@@ -20,15 +23,22 @@ class AccountController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('accounts/create', [
+            'accounts' => new Account()
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAccountRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated['user_id'] = auth()->id();
+
+        Account::create($validated);
+
+        return redirect()->route('cuentas.index')->with('success', 'Account created successfully.');
     }
 
     /**
