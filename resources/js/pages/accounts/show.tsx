@@ -9,18 +9,14 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Button } from '@/components/ui/button';
+import { dashboard } from '@/routes';
 
-export default function Index({ accounts }: { accounts: Account[] }) {
+export default function Show({ account }: { account: Account }) {
     return (
         <>
-            <Head title="Accounts | List" />
+            <Head title="Cuenta" />
             <div className="m-4">
-                <Link href="/cuentas/create">
-                    <Button>
-                        Crear Cuenta
-                    </Button>
-                </Link>
-                {accounts.length > 0 && (
+                {/* {accounts.length > 0 && (
                     <Table>
                         <TableCaption>Lista de sus cuentas</TableCaption>
                         <TableHeader>
@@ -51,16 +47,21 @@ export default function Index({ accounts }: { accounts: Account[] }) {
                             ))}
                         </TableBody>
                     </Table>
-                )}
+                )} */}
+                <h1>Cuenta: {account.name} Tipo: {account.type}</h1>
             </div>
         </>
     );
 }
 
-Index.layout = {
+Show.layout = {
     breadcrumbs: [
         {
-            title: 'Cuentas',
+            title: 'Dashboard',
+            href: dashboard(),
+        },
+        {
+            title: 'Cuenta',
             href: '#',
         },
     ],

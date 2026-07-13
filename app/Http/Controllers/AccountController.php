@@ -34,6 +34,7 @@ class AccountController extends Controller
     public function store(StoreAccountRequest $request)
     {
         $validated = $request->validated();
+        $validated['type'] = ucfirst(strtolower($validated['type']));
         $validated['user_id'] = auth()->id();
 
         Account::create($validated);
@@ -46,7 +47,9 @@ class AccountController extends Controller
      */
     public function show(Account $account)
     {
-        //
+        return inertia('accounts/show', [
+            'account' => $account
+        ]);
     }
 
     /**
@@ -54,15 +57,22 @@ class AccountController extends Controller
      */
     public function edit(Account $account)
     {
-        //
+        return inertia('accounts/edit', [
+            'account' => $account
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Account $account)
+    public function update(StoreAccountRequest $request, Account $account)
     {
-        //
+        $validated = $request->validated();
+        $validated['type'] = ucfirst(strtolower($validated['type']));
+
+        $account->update($validated);
+
+        return redirect()->route('cuentas.index')->with('success', 'Account updated successfully.');
     }
 
     /**

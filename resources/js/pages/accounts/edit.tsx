@@ -1,23 +1,22 @@
 import { Head, useForm } from '@inertiajs/react';
-import { store } from '@/routes/cuentas';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-export default function Create() {
-    const { data, setData, post, processing, errors } = useForm({
-        name: '',
-        type: '',
-        initial_balance: '',
+export default function Edit({ account }: { account: Account }) {
+    const { data, setData, put, processing, errors } = useForm({
+        name: account.name,
+        type: account.type,
+        initial_balance: account.initial_balance.toString(),
     });
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(store());
-    }
+        put(`/cuentas/${account.id}`);
+    };
 
     return (
         <>
-            <Head title="Cuenta | Crear" />
+            <Head title="Cuenta | Editar" />
             <div className="w-8/12 p-4">
                 <form onSubmit={handleSubmit} method="POST" className="space-y-4">
                     <div className="gap-1.5">
@@ -44,7 +43,9 @@ export default function Create() {
                         >
                         </Input>
                     </div>
-                    <Button type="submit">Crear Cuenta</Button>
+                    <Button type="submit" disabled={processing}>
+                        Actualizar Cuenta
+                    </Button>
                 </form>
             </div>
             <div className="w-8/12 p-4">
@@ -59,15 +60,22 @@ export default function Create() {
     );
 }
 
-Create.layout = {
+Edit.layout = {
     breadcrumbs: [
         {
             title: 'Cuentas',
             href: '/cuentas',
         },
         {
-            title: 'Crear Cuenta',
-            href: '/accounts/create',
+            title: 'Editar Cuenta',
+            href: '/accounts/edit',
         },
     ],
 };
+
+interface Account {
+    id: number;
+    name: string;
+    type: string;
+    initial_balance: string | number;
+}

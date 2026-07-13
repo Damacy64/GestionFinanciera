@@ -25,7 +25,7 @@ class StoreAccountRequest extends FormRequest
          return [
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'min:0'],
-            'initial_balance' => ['required', 'numeric', 'min:0']
+            'initial_balance' => ['required', 'numeric']
         ];
     }
 }
