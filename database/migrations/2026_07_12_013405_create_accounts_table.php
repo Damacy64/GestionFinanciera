@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('type');
             $table->decimal('initial_balance', 15, 2)->default(0.00);
+            $table->unsignedTinyInteger('cut_day')->nullable();
+            $table->unsignedTinyInteger('payment_day')->nullable();
+
             $table->timestamps();
         });
     }

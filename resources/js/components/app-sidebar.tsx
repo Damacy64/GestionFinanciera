@@ -26,7 +26,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Categorias',
-        href: '#'
+        href: '/categorias'
     },
     {
         title: 'Transacciones',

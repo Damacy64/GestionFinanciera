@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
@@ -15,4 +16,9 @@ Route::post('/cuentas', [AccountController::class, 'store'])->name('cuentas.stor
 Route::get('/cuentas/{account}/edit', [AccountController::class, 'edit'])->name('cuentas.edit');
 Route::put('/cuentas/{account}', [AccountController::class, 'update'])->name('cuentas.update');
 Route::get('/cuentas/{account}', [AccountController::class, 'show'])->name('cuentas.show');
+
+// Categorias
+Route::get('/categorias', [CategoryController::class, 'index'])->name('categorias.index');
+Route::get('/categorias/create', [CategoryController::class, 'create'])->name('categorias.create');
+Route::post('/categorias', [CategoryController::class, 'store'])->name('categorias.store');
 require __DIR__.'/settings.php';

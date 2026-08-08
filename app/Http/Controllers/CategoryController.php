@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -12,7 +13,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return inertia('categories/index', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -20,15 +24,23 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('categories/create', [
+            'categories' => new Category()
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated['name'] = ucfirst(strtolower($validated['name']));
+        $validated['user_id'] = auth()->id();
+
+        Category::create($validated);
+
+        return redirect()->route('categorias.index')->with('success', 'Category created successfully.');
     }
 
     /**
