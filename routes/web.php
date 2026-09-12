@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConvenioController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
@@ -21,4 +23,18 @@ Route::get('/cuentas/{account}', [AccountController::class, 'show'])->name('cuen
 Route::get('/categorias', [CategoryController::class, 'index'])->name('categorias.index');
 Route::get('/categorias/create', [CategoryController::class, 'create'])->name('categorias.create');
 Route::post('/categorias', [CategoryController::class, 'store'])->name('categorias.store');
+
+// Transacciones
+Route::get('/transacciones', [TransactionController::class, 'index'])->name('transacciones.index');
 require __DIR__.'/settings.php';
+
+// CONVENIOS
+Route::get('/convenios', [
+    ConvenioController::class,
+    'index'
+])->name('convenios.index');
+
+Route::post('/convenios/procesar', [
+    ConvenioController::class,
+    'procesar'
+])->name('convenios.procesar');
