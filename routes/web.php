@@ -28,13 +28,3 @@ Route::post('/categorias', [CategoryController::class, 'store'])->name('categori
 Route::get('/transacciones', [TransactionController::class, 'index'])->name('transacciones.index');
 require __DIR__.'/settings.php';
 
-// CONVENIOS
-Route::get('/convenios', [
-    ConvenioController::class,
-    'index'
-])->name('convenios.index');
-
-Route::post('/convenios/procesar', [
-    ConvenioController::class,
-    'procesar'
-])->name('convenios.procesar');
